@@ -25,21 +25,40 @@ Nette Chat Project
     - možnost smazat určitou zprávu
 
 
-- restApi
+restApi
+-GET - url: http://nabor.alistra.cloud/api/rooms/
 
-    -GET - url: http://nabor.alistra.cloud/api/messages
-    - hlavička
-            
-            - Authorization: apiToken
-            
-    -POST - url: http://nabor.alistra.cloud/api/messages
-    - hlavička
-              
-              - Authorization: apiToken
-              - user_id: 1
-              - text: nejaky text
-              
-    -DELETE - url: http://nabor.alistra.cloud/api/messages/1
-    - hlavička
-              
-              - Authorization: apiToken
+hlavička
+
+    - Authorization: apiToken
+
+= Vypíše seznam místností i s moderatory
+-POST - url:  http://nabor.alistra.cloud/api/rooms/
+
+hlavička
+
+    - Authorization: apiToken
+    - name: text nazev mistnosti
+    - description: text popis mistnosti
+
+Když se přidá 
+    - moderator: id moderatoru, oddělovač čárka, tak se vloží k vytvořené místnosti
+
+= Založí novou skupinu, případně s moderátory
+-PUT - url:  http://nabor.alistra.cloud/api/rooms/1  
+
+hlavička
+
+    - Authorization: apiToken
+    - id: id skupiny
+    - name: text nazev mistnosti
+    - description: text popis mistnosti
+Když se přidá 
+    - moderator: id moderatoru, oddělovač čárka, tak se vloží k vytvořené místnosti
+
+= Aktualizuje skupinu, případně moderátory (smaže všechny a nově přidá)
+-DELETE - url: http://nabor.alistra.cloud/api/rooms/1
+
+hlavička
+
+    - Authorization: apiToken
