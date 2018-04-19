@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+    <!--  Bootstrap start  -->
+    <link href="{$basePath}/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="{$basePath}/css/style.css" rel="stylesheet" media="screen">
+    <link href="{$basePath}/css/select2.min.css" rel="stylesheet" media="screen">
+    <script src="{$basePath}/js/jquery-1.12.4.js"></script>
+    <script src="{$basePath}/js/bootstrap.min.js"></script>
+    <script src="{$basePath}/js/jquery.dataTables.min.js"></script>
+    <script src="{$basePath}/js/dataTables.bootstrap.min.js"></script>
+    <script src="{$basePath}/js/main.js"></script>
+    <script src="{$basePath}/js/netteForms.js"></script>
+    <script src="{$basePath}/js/nette.ajax.js"></script>
+    <script src="{$basePath}/js/nette.ajax.js"></script>
+    <!--  Bootstrap end  -->
+
+	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
+</head>
+
+<body>
+	<script> document.body.className+=' js' </script>
+
+
+
+        <!-- Static navbar -->
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" n:href="Homepage:">Bajzany chat extended - chatovací aplikace</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        {if $user->isInRole('admin')}
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown">Admin
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a n:href="Admin:users">Seznam uživatelů</a></li>
+                                    <li><a n:href="Admin:rooms">Seznam místností</a></li>
+                                    <li><a n:href="Admin:message">Zprávy</a></li>
+                                    <li><a n:href="Admin:api">API</a></li>
+                                </ul>
+                            </li>
+                        {/if}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+
+                        {if $user->loggedIn}
+                            <li class="nav-item">
+                                <a>Přihlášený uživatel: {$user->identity->name} ({$user->identity->role})</a>
+                            </li>
+                            <li class="nav-item">
+                                <a n:href="Sign:out">Odhlásit</a>
+                            </li>
+                        {else}
+                            <li class="nav-item">
+                                <a href="{plink Register:register}">Registrovat</a>
+                            </li>
+                            <li class="nav-item">
+                                <a n:href="Sign:in">Přihlásit</a>
+                            </li>
+                        {/if}
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </nav>
+
+
+    <div class="container">
+        <div n:foreach="$flashes as $flash" class="alert {$flash->type}">{$flash->message}</div>
+
+        {include #content}
+
+    </div>
+    {*{control sidebar}*}
+    {block scripts}
+
+        <script src="{$basePath}/js/select2/select2.min.js"></script>
+
+        <script src="{$basePath}/js/select2/i18n/cs.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#select2').select2({
+                    "language": "cs"
+                });
+            });
+        </script>
+        <script src="{$basePath}/js/social.js"></script>
+    {/block}
+
+</body>
+</html>

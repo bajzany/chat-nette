@@ -1,0 +1,16 @@
+<h4>
+    Online uživatelé
+</h4>
+<div n:snippet="sidebar-snippet">
+        <ul>
+            <li n:foreach="$members as $member">
+                {$member->name}
+            </li>
+        </ul>
+
+        <div n:if="!$members">
+            Žádný uživatel není online
+        </div>
+</div>
+
+

@@ -1,0 +1,25 @@
+parameters:
+
+
+application:
+    errorPresenter: Error
+    mapping:
+        *: App\*Module\Presenters\*Presenter
+
+
+session:
+    expiration: 14 days
+
+
+services:
+    router: App\RouterFactory::createRouter
+
+    connection:
+        class: Dibi\Connection(%database%)
+
+    - App\Manager\UserManager(Dibi\Connection(%database%))
+    - App\Manager\MessageManager(Dibi\Connection(%database%))
+    - App\Manager\TokenManager(Dibi\Connection(%database%))
+    - App\Model\Authenticator(Dibi\Connection(%database%))
+    - App\Model\RoomManager(Dibi\Connection(%database%))
+    - App\Controls\Sidebar\SidebarFactory

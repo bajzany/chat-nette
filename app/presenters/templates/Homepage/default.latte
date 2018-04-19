@@ -1,0 +1,46 @@
+{block #content}
+
+<div class="jumbotron">
+    <h1>Bajzany chat extended</h1>
+    <p>Chatovací aplikace</p>
+    <a class="btn btn-lg btn-primary" n:href="Users:default" role="button">Seznam registrovaných uživatelů</a>
+</div>
+
+<div class="row">
+    <div n:snippet="rooms-snippet" class="rooms col-md-9 container_rooms">
+        <div class="">
+                <div n:foreach="$rooms as $room" class="media col-md-4" style="margin: 5px 0;">
+                    <div style="padding: 10px; border: 1px solid #ddd;">
+                        <div class="thumbnail clearfix col-md-2" style="margin: 10px;">
+                            <a n:href="Room:detail $room->id">
+                                <img src="http://placehold.it/114x88" width="114" height="88">
+                            </a>
+                        </div>
+                        <div class="media-body clearfix" style="padding: 10px;">
+                            <h3 class="media-heading" style="margin-bottom: 0px; font-size: 17px;">
+                                <a n:href="Room:detail $room->id">{$room->name}</a>
+                            </h3>
+                            <p>{$room->description}</p>
+                            <span class="date">chatuje lidí: <strong>{$room->countMembers}</strong></span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="sidebar col-md-3">
+        <div style="padding: 10px; border: 1px solid #ddd;">
+            {control sidebar}
+        </div>
+    </div>
+</div>
+
+<script>
+  $(function () {
+      function pageRefresh() {
+          $.nette.ajax({
+              url: {link pageRefresh!}
+          });
+      }
+      setInterval(pageRefresh,1000);
+  });
+</script>

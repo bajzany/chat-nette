@@ -1,0 +1,69 @@
+{block #content}
+
+<div class="jumbotron">
+    <h1>Bajzany chat extended</h1>
+    <p>Chatovací aplikace</p>
+    <a class="btn btn-lg btn-primary" n:href="Users:default" role="button">Seznam registrovaných uživatelů</a>
+</div>
+{if $user->loggedIn}
+    <h2>{$room->name}</h2>
+    moderátoři: {$room->moderators}
+    <div class="row">
+        <div class="roos col-md-9 container_rooms">
+            <div class="">
+                <div class="panel panel-default">
+                    <div class="panel-heading top-bar">
+                        <div class="col-md-8 col-xs-8">
+                            <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Zprávy </h3>
+                        </div>
+                    </div>
+                    <div class="panel-body msg_container_base">
+                        <div n:snippet="chat-window-snippet">
+                            <div n:foreach="$messages as $message" class="row msg_container base_sent">
+                                <div class="col-md-11">
+                                    <div class="messages msg_sent">
+                                        <p>{$message->text}</p>
+                                        <time datetime="2009-11-13T20:00">{$message->date|date:'j. n. Y H:i:s'}</time>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 thumbnail" style="margin: 0">
+                                    <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" title="{$message->name}" class=" img-responsive ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer ajaxMessageForm" onchange="">
+                        {control sendMessageForm}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar col-md-3">
+            <div style="padding: 10px; border: 1px solid #ddd;">
+                {control sidebar}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            function chatChange() {
+                $.nette.ajax({
+                    url: {link refreshChat!}
+                });
+                $('.msg_container_base').scrollTop($('.msg_container_base')[0].scrollHeight);
+            }
+            setInterval(chatChange,1000);
+
+            $('.ajaxMessageForm .ajax').on('click', function (e) {
+                $.nette.ajax({
+                    success: function (payload, status, xhr) {
+                        $("#message").val("");
+                        $("#message").focus();
+                        $('.msg_container_base').scrollTop($('.msg_container_base')[0].scrollHeight);
+                    }
+                }, this, e)
+            })
+        });
+    </script>
+{/if}

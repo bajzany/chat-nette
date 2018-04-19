@@ -1,0 +1,37 @@
+{block #content}
+
+<h2>Seznam místností</h2>
+
+<div class="table-header clearfix">
+    <a n:href="addRoom">Přidat místnost</a>
+</div>
+<table id="datatable" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Název</th>
+        <th>Popis</th>
+        <th>Moderátor</th>
+        <th>Akce</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr n:foreach="$rooms as $room">
+        <td>
+            {$room->id}
+        </td>
+        <td>
+            {$room->name}
+        </td>
+        <td >
+            {$room->description}
+        </td>
+        <td >
+            {$room->moderators}
+        </td>
+        <td>
+            <a class="btn btn-default btn-xs" n:href="Admin:editRoom, $room->id">Upravit</a>
+            <a class="btn btn-danger btn-xs" n:href="deleteRoom!, $room->id">Smazat</a>
+        </td>
+    </tr>
+</table>
